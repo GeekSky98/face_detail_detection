@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="941e852e-0506-44be-903d-32fd0f46cb9c" name="변경" comment="" />
+    <list default="true" id="941e852e-0506-44be-903d-32fd0f46cb9c" name="변경" comment="initial commit &amp; load tensorflow object detection API">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,10 +49,36 @@
       <workItem from="1676370860521" duration="782000" />
       <workItem from="1676378553791" duration="14000" />
       <workItem from="1676388396479" duration="2514000" />
+      <workItem from="1676467612936" duration="109000" />
+      <workItem from="1676555446613" duration="607000" />
+      <workItem from="1676690651745" duration="431000" />
     </task>
+    <task id="LOCAL-00001" summary="initial commit &amp; load tensorflow object detection API">
+      <created>1676467711573</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1676467711573</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial commit &amp; load tensorflow object detection API" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial commit &amp; load tensorflow object detection API" />
   </component>
 </project>
