@@ -1,17 +1,8 @@
-import matplotlib.pyplot as plt
-
 import numpy as np
 from six import BytesIO
 from PIL import Image
 
 import tensorflow as tf
-import tarfile
-import os
-
-from object_detection.utils import label_map_util
-from object_detection.utils import config_util
-from object_detection.utils import visualization_utils as viz_utils
-from object_detection.builders import model_builder
 
 
 def load_image_into_numpy_array(path):
@@ -32,3 +23,14 @@ def get_model_detection_function(model):
     return detections, prediction_dict, tf.reshape(shapes, [-1])
 
   return detect_fn
+
+
+def swap_xy(boxes):
+    return tf.stack([boxes[:, 1], boxes[:, 0], boxes[:, 3], boxes[:, 2]], axis=-1)
+
+
+def convert_to_xywh(boxes):
+    return tf.concat(
+        [(boxes[..., :2] + boxes[..., 2:]) / 2.0, boxes[..., 2:] - boxes[..., :2]],
+        axis=-1
+    )
