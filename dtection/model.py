@@ -15,7 +15,8 @@ import numpy as np
 import tensorflow as tf
 import tarfile
 import os
-from utils import load_image_into_numpy_array, get_model_detection_function, swap_xy, convert_to_xywh
+from matplotlib.patches import Rectangle
+from utils import load_image_into_numpy_array, get_model_detection_function, generate_xywh
 from object_detection.utils import label_map_util
 from object_detection.utils import config_util
 from object_detection.utils import visualization_utils as viz_utils
@@ -74,26 +75,23 @@ def predict(model, image_path, threshold=0.3, label_id_offset=1):
     score_idx_set = set(np.reshape(score_idx, [-1]))
 
     pred_box = tf.gather(detections['detection_boxes'][0], list(person_idx_set & score_idx_set))
-    pred_class = tf.gather(detections['detection_classes'][0], list(person_idx_set & score_idx_set))
-    pred_score = tf.gather(detections['detection_scores'][0], list(person_idx_set & score_idx_set))
+    # pred_class = tf.gather(detections['detection_classes'][0], list(person_idx_set & score_idx_set))
+    # pred_score = tf.gather(detections['detection_scores'][0], list(person_idx_set & score_idx_set))
 
-    pred_box = convert_to_xywh(swap_xy(pred_box))
+    x, y, w, h = generate_xywh(image, pred_box)
 
-    viz_utils.visualize_boxes_and_labels_on_image_array(
-        image,
-        pred_box.numpy(),
-        (pred_class.numpy() + label_id_offset).astype(int),
-        pred_score.numpy(),
-        category_index,
-        use_normalized_coordinates=True,
-        max_boxes_to_draw=200,
-        min_score_thresh=threshold,
-        agnostic_mode=False
-    )
-
+    ax = plt.subplot()
+    for idx in range(len(pred_box)):
+        rect = Rectangle((x[idx], y[idx]), w[idx], h[idx], fill=False, color='red')
+        ax.add_patch(rect)
+        ax.text(x[idx], y[idx], str(idx+1)+'option')
     plt.imshow(image)
     plt.savefig('./dtection/test')
+    plt.clf()
 
-predict(od_model, image_path)
+    return x, y, w, h
+
+x, y, w, h = predict(od_model, image_path)
 
 
+def image_crop(image, option=1):

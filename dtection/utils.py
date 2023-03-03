@@ -34,3 +34,17 @@ def convert_to_xywh(boxes):
         [(boxes[..., :2] + boxes[..., 2:]) / 2.0, boxes[..., 2:] - boxes[..., :2]],
         axis=-1
     )
+
+
+def generate_xywh(image, box):
+    height, width = image.shape[:2]
+
+    box_swap = swap_xy(box)
+    box_xywh = convert_to_xywh(box_swap)
+
+    box_w = box_xywh[:,2].numpy() * width
+    box_h = box_xywh[:,3].numpy() * height
+    box_x = ((box_xywh[:, 0].numpy()) * width) - (box_w / 2)
+    box_y = ((box_xywh[:, 1].numpy()) * height) - (box_h / 2)
+
+    return box_x, box_y, box_w, box_h
