@@ -16,10 +16,10 @@ import tensorflow as tf
 import tarfile
 import os
 from matplotlib.patches import Rectangle
-from utils import load_image_into_numpy_array, get_model_detection_function, generate_xywh
+from PIL import Image
+from utils import load_image_into_numpy_array, get_model_detection_function, generate_xywh, get_corners
 from object_detection.utils import label_map_util
 from object_detection.utils import config_util
-from object_detection.utils import visualization_utils as viz_utils
 from object_detection.builders import model_builder
 
 def category():
@@ -89,9 +89,19 @@ def predict(model, image_path, threshold=0.3, label_id_offset=1):
     plt.savefig('./dtection/test')
     plt.clf()
 
-    return x, y, w, h
+    return np.stack([x, y, w, h])
 
-x, y, w, h = predict(od_model, image_path)
+coordinates = predict(od_model, image_path)
 
+def image_crop(image, coordinates, option=1):
+    coord_stack = coordinates[:,(option-1)]
+    left, top, right, bottom = get_corners(coord_stack)
 
-def image_crop(image, option=1):
+    croped_image = image.crop((left, top, right, bottom))
+
+    plt.imshow(croped_image)
+    plt.savefig('./dtection/crop')
+
+image = Image.open(image_path)
+image_crop(image, coordinates, option=2)
+

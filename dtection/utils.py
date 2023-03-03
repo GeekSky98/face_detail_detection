@@ -48,3 +48,12 @@ def generate_xywh(image, box):
     box_y = ((box_xywh[:, 1].numpy()) * height) - (box_h / 2)
 
     return box_x, box_y, box_w, box_h
+
+
+def get_corners(coordinates):
+    left = coordinates[0]
+    top = coordinates[1]
+    right = left + coordinates[2]
+    bottom = top + coordinates[3]
+
+    return left, top, right, bottom
